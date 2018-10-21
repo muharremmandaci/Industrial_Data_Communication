@@ -16,11 +16,15 @@
 class RS485_Master
 {
   private:
+    // create slaves (Slave-Address, Slave-Communication Direction Pin)
     byte slave_one[2] = {0x01, 0x03};
     byte slave_two[2] = {0x02, 0x04};
 
   public:
+    // create the array that includes all slaves
     byte* slaves[2] = {slave_one, slave_two};
+
+    // RS485 function prototypes
     RS485_Master();
     void init();
     int send_cmd(int slave, byte command);
