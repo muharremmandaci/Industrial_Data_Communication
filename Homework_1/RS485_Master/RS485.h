@@ -11,6 +11,8 @@
 #define CMD_LED_ON  0x01
 #define CMD_LED_OFF 0x00
 
+#define ACKNOWLEDGE 0x05
+
 class RS485_Master
 {
   private:

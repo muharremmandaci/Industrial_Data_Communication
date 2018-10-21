@@ -3,15 +3,7 @@
 #include "RS485.h"
 
 RS485_Master::RS485_Master() {
-  Serial.begin(9600);
 
-  pinMode(MASTER_DIR, OUTPUT);
-  pinMode(slave_one[DIR_PIN],  OUTPUT);
-  pinMode(slave_two[DIR_PIN], OUTPUT);
-
-  digitalWrite(MASTER_DIR, HIGH);
-  digitalWrite(slave_one[DIR_PIN],  LOW);
-  digitalWrite(slave_two[DIR_PIN], LOW);
 }
 
 void RS485_Master::init() {
@@ -29,7 +21,7 @@ void RS485_Master::init() {
 int RS485_Master::send_cmd(int slave, byte command) {
   Serial.write(slaves[slave][ADDRESS]);
   Serial.write(command);
-
+  delay(10);
   digitalWrite(MASTER_DIR, LOW);
   digitalWrite(slaves[slave][DIR_PIN],  HIGH);
 
@@ -44,7 +36,7 @@ int RS485_Master::send_cmd(int slave, byte command) {
 int RS485_Master::wait_response() {
   while (!Serial.available());
 
-  if (0x05 == Serial.read()) {
+  if (ACKNOWLEDGE == Serial.read()) {
     return 1;
   }
   return -1;
